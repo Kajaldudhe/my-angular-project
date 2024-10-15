@@ -45,7 +45,12 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {SrNo: '1', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''}
+  {SrNo: '1', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
+  {SrNo: '2', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
+  {SrNo: '3', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
+  {SrNo: '4', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
+  {SrNo: '5', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
+  {SrNo: '6', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''}
 ];
 
 @Component({
