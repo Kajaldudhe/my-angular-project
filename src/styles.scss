@@ -33,11 +33,11 @@ small{
     padding: 2px !important;
 }
 
-// .btn-main:hover {
-//     background-color: var(--main-dark-color) !important;
-//     color: #fff !important;
-//     font-size: 1.5rem;
-//   }
+.btn-main:hover {
+    background-color: var(--main-dark-color) !important;
+    color: #fff !important;
+    font-size: 1.5rem;
+  }
 //   .dashboard-table tbody tr:nth-child(even) {
 //     background-color: #0e5dd3 !important;
 // }
@@ -67,14 +67,21 @@ small{
     min-width: 38px !important;
     padding: 6px !important;
     text-align: center !important;
-    background-color: var(--main-dark-color) !important;
-    color: #fff !important;
+    // color: #fff !important;
     font-size: 1.5rem;
-    background-color: var(--main-dark-color) !important;
-    color: #fff !important;
-    font-size: 1.5rem;
+    
 }
 .btn-icon .material-symbols-outlined{
     font-size: 1.2rem !important;
     margin: 0 !important;
+}
+.page-link {
+    color: #0a0a0a !important;
+    margin-top: 1rem;
+    box-shadow: none !important;
+} 
+
+.form-select{
+    box-shadow: none !important;
+    background-color: #eee !important;
 }

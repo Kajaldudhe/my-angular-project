@@ -42,15 +42,20 @@ export interface PeriodicElement {
   Account: any;
   Branch: any;
   Action: any;
+  
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {SrNo: '1', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
-  {SrNo: '2', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
-  {SrNo: '3', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
-  {SrNo: '4', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
-  {SrNo: '5', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''},
-  {SrNo: '6', AccountType: 'Hydrogen', AccountHolder: '1.0079', Bank: 'H', Account: 'H', Branch: 'H', Action: ''}
+  {SrNo: '1', AccountType: 'Saving Account', AccountHolder: 'Rakesh', Bank: 'HDFC', Account: '1001001234', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '2', AccountType: 'Current Account', AccountHolder: 'Nalini', Bank: 'SBI Bank', Account: '2002001567', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '3', AccountType: 'Salary Account', AccountHolder: 'Aarav', Bank: 'CBI Bank', Account: '2112001298', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '4', AccountType: 'Asstes Account', AccountHolder: 'Ritesh', Bank: 'Bank of Baroda', Account: '6566006544', Branch: 'Baroda', Action: ''},
+  {SrNo: '5', AccountType: 'Expenses Account', AccountHolder: 'Vivian', Bank: 'Bank Of India', Account: '3223004321', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '6', AccountType: 'Income Account', AccountHolder: 'Chahat', Bank: 'Canara Bank', Account: '3456005434', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '7', AccountType: 'Liabilities Account', AccountHolder: 'Ligon', Bank: 'Indian Bank', Account: '2312002345', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '8', AccountType: 'Equity Account', AccountHolder: 'Dezzi', Bank: 'Bank of Maharashtra', Account: '9089007008', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '9', AccountType: 'Cash Account', AccountHolder: 'Beak Yonu', Bank: 'Indian Overseas Bank', Account: '65450015544', Branch: 'Maharashtra', Action: ''},
+  {SrNo: '10', AccountType: 'Personal Account', AccountHolder: 'Hey-In', Bank: 'Punjab National Bank', Account: '44330013434', Branch: 'Panjab', Action: ''}
 ];
 
 @Component({
@@ -67,4 +72,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class FormComponent {
   displayedColumns: string[] = ['SrNo', 'AccountType', 'AccountHolder', 'Bank', 'Account', 'Branch', 'Action'];
   dataSource = ELEMENT_DATA;
+  isEdit:boolean = false
 }
