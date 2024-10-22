@@ -33,8 +33,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTreeModule} from '@angular/material/tree';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export interface PeriodicElement {
+  checkbox: any;
   SrNo: any;
   AccountType: any;
   AccountHolder: any;
@@ -46,16 +48,16 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {SrNo: '1', AccountType: 'Saving Account', AccountHolder: 'Rakesh', Bank: 'HDFC', Account: '1001001234', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '2', AccountType: 'Current Account', AccountHolder: 'Nalini', Bank: 'SBI Bank', Account: '2002001567', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '3', AccountType: 'Salary Account', AccountHolder: 'Aarav', Bank: 'CBI Bank', Account: '2112001298', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '4', AccountType: 'Asstes Account', AccountHolder: 'Ritesh', Bank: 'Bank of Baroda', Account: '6566006544', Branch: 'Baroda', Action: ''},
-  {SrNo: '5', AccountType: 'Expenses Account', AccountHolder: 'Vivian', Bank: 'Bank Of India', Account: '3223004321', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '6', AccountType: 'Income Account', AccountHolder: 'Chahat', Bank: 'Canara Bank', Account: '3456005434', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '7', AccountType: 'Liabilities Account', AccountHolder: 'Ligon', Bank: 'Indian Bank', Account: '2312002345', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '8', AccountType: 'Equity Account', AccountHolder: 'Dezzi', Bank: 'Bank of Maharashtra', Account: '9089007008', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '9', AccountType: 'Cash Account', AccountHolder: 'Beak Yonu', Bank: 'Indian Overseas Bank', Account: '65450015544', Branch: 'Maharashtra', Action: ''},
-  {SrNo: '10', AccountType: 'Personal Account', AccountHolder: 'Hey-In', Bank: 'Punjab National Bank', Account: '44330013434', Branch: 'Panjab', Action: ''}
+  {checkbox:'',SrNo: '1', AccountType: 'Saving Account', AccountHolder: 'Rakesh', Bank: 'HDFC', Account: '1001001234', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '2', AccountType: 'Current Account', AccountHolder: 'Nalini', Bank: 'SBI Bank', Account: '2002001567', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '3', AccountType: 'Salary Account', AccountHolder: 'Aarav', Bank: 'CBI Bank', Account: '2112001298', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '4', AccountType: 'Asstes Account', AccountHolder: 'Ritesh', Bank: 'Bank of Baroda', Account: '6566006544', Branch: 'Baroda', Action: ''},
+  {checkbox:'',SrNo: '5', AccountType: 'Expenses Account', AccountHolder: 'Vivian', Bank: 'Bank Of India', Account: '3223004321', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '6', AccountType: 'Income Account', AccountHolder: 'Chahat', Bank: 'Canara Bank', Account: '3456005434', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '7', AccountType: 'Liabilities Account', AccountHolder: 'Ligon', Bank: 'Indian Bank', Account: '2312002345', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '8', AccountType: 'Equity Account', AccountHolder: 'Dezzi', Bank: 'Bank of Maharashtra', Account: '9089007008', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '9', AccountType: 'Cash Account', AccountHolder: 'Beak Yonu', Bank: 'Indian Overseas Bank', Account: '65450015544', Branch: 'Maharashtra', Action: ''},
+  {checkbox:'',SrNo: '10', AccountType: 'Personal Account', AccountHolder: 'Hey-In', Bank: 'Punjab National Bank', Account: '44330013434', Branch: 'Panjab', Action: ''}
 ];
 
 @Component({
@@ -66,11 +68,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
   imports:[MatSlideToggleModule,MatButtonModule,MatDividerModule,MatSortModule,MatSnackBarModule,MatSliderModule,MatSidenavModule,MatSelectModule,
     MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatRippleModule,MatRadioModule,MatProgressSpinnerModule,MatPaginatorModule,MatMenuModule,
     MatCardModule,MatCheckboxModule,MatChipsModule,MatNativeDateModule,MatProgressBarModule,MatListModule,MatInputModule,MatIconModule,MatGridListModule,
-    MatDatepickerModule,MatDialogModule,MatExpansionModule,MatTreeModule,MatToolbarModule,MatTabsModule,MatTableModule,MatStepperModule,MatFormFieldModule
+    MatDatepickerModule,MatDialogModule,MatExpansionModule,MatTreeModule,MatToolbarModule,MatTabsModule,MatTableModule,MatStepperModule,MatFormFieldModule,ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class FormComponent {
-  displayedColumns: string[] = ['SrNo', 'AccountType', 'AccountHolder', 'Bank', 'Account', 'Branch', 'Action'];
+  displayedColumns: string[] = ['checkbox','SrNo', 'AccountType', 'AccountHolder', 'Bank', 'Account', 'Branch', 'Action'];
   dataSource = ELEMENT_DATA;
-  isEdit:boolean = false
+  isEdit:boolean = false;
+  check = new Array();
+  filterForm!:FormGroup;
+  bankForm!:FormGroup
 }
