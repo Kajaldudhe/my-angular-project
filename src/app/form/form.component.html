@@ -118,7 +118,7 @@
                 <div class="col-sm-11">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Select Orgnization Name</mat-label>
-                    <mat-select formControlName="orgnization">
+                    <mat-select formControlName="OrganizationId">
                       <mat-option value="option">Option</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -126,22 +126,25 @@
                 <div class="col-sm-11">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Select Unit Name</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="UserId">
                       <mat-option value="option">Option</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="d-flex mt-2 w-100">
-                  <mat-label class="ms-4">Account Type :</mat-label>
-                  <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button value="1">Option 1</mat-radio-button>
-                    <mat-radio-button value="2">Option 2</mat-radio-button>
+                <div class="d-flex mt-2 w-100 ms-4">
+                  <div class="form-label">
+                    Account Type :
+                </div>
+                  <mat-radio-group aria-label="Select an option" 
+                  formControlName="underGroupId">
+                    <mat-radio-button *ngFor="let aTypes of AccountTypeArr"
+                     [value]="aTypes.id">{{aTypes.accountName}}</mat-radio-button>
                   </mat-radio-group>
                 </div>
                 <div class="col-sm-11">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Select Bank Name</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="BankId">
                       <mat-option value="option">Option</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -149,23 +152,23 @@
                 <div class="col-sm-11">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Branch Name</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="BranchName">
                   </mat-form-field>
                 </div>
                 <div class="d-flex">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>IFSC Code</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="ifscCode">
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Account Number</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="accountNo">
                   </mat-form-field>
                 </div>
                 <div class="col-sm-11">
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Account Holder Name</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="accountHolderName">
                   </mat-form-field>
                 </div>
                 <div class="col-sm-11 ms-3">

@@ -33,7 +33,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTreeModule} from '@angular/material/tree';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface PeriodicElement {
   checkbox: any;
@@ -69,7 +71,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatRippleModule,MatRadioModule,MatProgressSpinnerModule,MatPaginatorModule,MatMenuModule,
     MatCardModule,MatCheckboxModule,MatChipsModule,MatNativeDateModule,MatProgressBarModule,MatListModule,MatInputModule,MatIconModule,MatGridListModule,
     MatDatepickerModule,MatDialogModule,MatExpansionModule,MatTreeModule,MatToolbarModule,MatTabsModule,MatTableModule,MatStepperModule,MatFormFieldModule,ReactiveFormsModule,
-    FormsModule
+    FormsModule,CommonModule,TranslateModule
   ]
 })
 export class FormComponent {
@@ -78,5 +80,32 @@ export class FormComponent {
   isEdit:boolean = false;
   check = new Array();
   filterForm!:FormGroup;
-  bankForm!:FormGroup
+  bankForm!:FormGroup;
+  AccountTypeArr: any[] = [
+    { id: 30, accountName: 'Bank Account' },
+    { id: 25, accountName: 'Cash Account' }
+  ]
+
+constructor(private fb:FormBuilder,private translate: TranslateService){
+  translate.setDefaultLang('en');
+  translate.use('mr'); 
+}
+ngOnInit(){
+this.controlForm();
+}
+
+
+  controlForm(){
+    this.bankForm = this.fb.group({
+      id: [],
+      OrganizationId :['',[Validators.required]],
+      UserId :['',[Validators.required]],
+      underGroupId :[30],
+      BankId :['',[Validators.required]],
+      BranchName :['',[Validators.required]],
+      ifscCode :['',[Validators.required]],
+      accountNo :['',[Validators.required]],
+      accountHolderName :['',[Validators.required]]
+    })
+  }
 }
