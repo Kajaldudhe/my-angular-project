@@ -36,31 +36,31 @@ import {MatTreeModule} from '@angular/material/tree';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
-export interface PeriodicElement {
-  checkbox: any;
-  SrNo: any;
-  AccountType: any;
-  AccountHolder: any;
-  Bank: any;
-  Account: any;
-  Branch: any;
-  Action: any;
+import { CallApiService } from '../core/services/call-api.service';
+// export interface PeriodicElement {
+//   checkbox: any;
+//   SrNo: any;
+//   AccountType: any;
+//   AccountHolder: any;
+//   Bank: any;
+//   Account: any;
+//   Branch: any;
+//   Action: any;
   
-}
+// }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {checkbox:'',SrNo: '1', AccountType: 'Saving Account', AccountHolder: 'Rakesh', Bank: 'HDFC', Account: '1001001234', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '2', AccountType: 'Current Account', AccountHolder: 'Nalini', Bank: 'SBI Bank', Account: '2002001567', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '3', AccountType: 'Salary Account', AccountHolder: 'Aarav', Bank: 'CBI Bank', Account: '2112001298', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '4', AccountType: 'Asstes Account', AccountHolder: 'Ritesh', Bank: 'Bank of Baroda', Account: '6566006544', Branch: 'Baroda', Action: ''},
-  {checkbox:'',SrNo: '5', AccountType: 'Expenses Account', AccountHolder: 'Vivian', Bank: 'Bank Of India', Account: '3223004321', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '6', AccountType: 'Income Account', AccountHolder: 'Chahat', Bank: 'Canara Bank', Account: '3456005434', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '7', AccountType: 'Liabilities Account', AccountHolder: 'Ligon', Bank: 'Indian Bank', Account: '2312002345', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '8', AccountType: 'Equity Account', AccountHolder: 'Dezzi', Bank: 'Bank of Maharashtra', Account: '9089007008', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '9', AccountType: 'Cash Account', AccountHolder: 'Beak Yonu', Bank: 'Indian Overseas Bank', Account: '65450015544', Branch: 'Maharashtra', Action: ''},
-  {checkbox:'',SrNo: '10', AccountType: 'Personal Account', AccountHolder: 'Hey-In', Bank: 'Punjab National Bank', Account: '44330013434', Branch: 'Panjab', Action: ''}
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {checkbox:'',SrNo: '1', AccountType: 'Saving Account', AccountHolder: 'Rakesh', Bank: 'HDFC', Account: '1001001234', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '2', AccountType: 'Current Account', AccountHolder: 'Nalini', Bank: 'SBI Bank', Account: '2002001567', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '3', AccountType: 'Salary Account', AccountHolder: 'Aarav', Bank: 'CBI Bank', Account: '2112001298', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '4', AccountType: 'Asstes Account', AccountHolder: 'Ritesh', Bank: 'Bank of Baroda', Account: '6566006544', Branch: 'Baroda', Action: ''},
+//   {checkbox:'',SrNo: '5', AccountType: 'Expenses Account', AccountHolder: 'Vivian', Bank: 'Bank Of India', Account: '3223004321', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '6', AccountType: 'Income Account', AccountHolder: 'Chahat', Bank: 'Canara Bank', Account: '3456005434', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '7', AccountType: 'Liabilities Account', AccountHolder: 'Ligon', Bank: 'Indian Bank', Account: '2312002345', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '8', AccountType: 'Equity Account', AccountHolder: 'Dezzi', Bank: 'Bank of Maharashtra', Account: '9089007008', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '9', AccountType: 'Cash Account', AccountHolder: 'Beak Yonu', Bank: 'Indian Overseas Bank', Account: '65450015544', Branch: 'Maharashtra', Action: ''},
+//   {checkbox:'',SrNo: '10', AccountType: 'Personal Account', AccountHolder: 'Hey-In', Bank: 'Punjab National Bank', Account: '44330013434', Branch: 'Panjab', Action: ''}
+// ];
 
 @Component({
   standalone: true,
@@ -76,22 +76,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class FormComponent {
   displayedColumns: string[] = ['checkbox','SrNo', 'AccountType', 'AccountHolder', 'Bank', 'Account', 'Branch', 'Action'];
-  dataSource = ELEMENT_DATA;
+  dataSource : any;
   isEdit:boolean = false;
   check = new Array();
   filterForm!:FormGroup;
   bankForm!:FormGroup;
+  totalPages: any;
+  pageNo = 1;
+  pageSize = 10;
+  organizationArray = new Array()
   AccountTypeArr: any[] = [
     { id: 30, accountName: 'Bank Account' },
     { id: 25, accountName: 'Cash Account' }
   ]
 
-constructor(private fb:FormBuilder,private translate: TranslateService){
+constructor(private fb:FormBuilder,private translate: TranslateService,public callApi:CallApiService){
   translate.setDefaultLang('en');
   translate.use('mr'); 
 }
-ngOnInit(){
-this.controlForm();
+
+ngOnInit() {
+  // this.getData();
+  // this.controlForm();
+  this.getOrg();
+
 }
 
 
@@ -108,4 +116,39 @@ this.controlForm();
       accountHolderName :['',[Validators.required]]
     })
   }
+
+
+  // getData(){
+  //   let formData = this.bankForm.value
+  //   this.callApi.setHttp('get','BankAccountRegister/GetAll?BankId='+formData.bankId+'&BranchName='+formData.branchId +'&OrganizationId='+formData.organizationId+'&UnitId='+formData.unitId+'&pageNo='+this.pageNo+'&pageSize='+this.totalPages,false,false,false,'baseURL');
+  //   this.callApi.getHttp().subscribe({
+  //     next: (res:any) =>{
+  //       if(res.statusCode === '200'){
+  //       this.dataSource . res.responseData;
+  //       this.totalPages = res.responseData1?.totalCount
+  //       }
+  //     }
+  //   })
+  // }
+
+  getOrg(){
+    this.callApi.setHttp('get','MasterDropdown/GetAllOrganization?UserId=1',false,false,false,'baseURL');
+    this.callApi.getHttp().subscribe({
+      next: (res:any) =>{
+        if (res.statusCode == "200"){
+          this.organizationArray = res.responseData
+        }
+      }
+    })
+  }
+  // getUnit(){
+  //   this.callApi.setHttp('get','MasterDropdown/GetAllOrganization?UserId=1',false,false,false,'baseURL');
+  //   this.callApi.getHttp().subscribe({
+  //     next: (res:any) =>{
+  //       if (res.statusCode == "200"){
+  //         this.organizationArray = res.responseData
+  //       }
+  //     }
+  //   })
+  // }
 }

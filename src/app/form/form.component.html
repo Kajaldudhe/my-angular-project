@@ -119,7 +119,7 @@
                   <mat-form-field appearance="outline" class="mt-2 w-100">
                     <mat-label>Select Orgnization Name</mat-label>
                     <mat-select formControlName="OrganizationId">
-                      <mat-option value="option">Option</mat-option>
+                      <mat-option *ngFor="let org of organizationArray" [value]="org.id">{{org.organizationName}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>

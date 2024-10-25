@@ -6,66 +6,71 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class CallApiService {
-userObj = new Array();
-private httpObj: any ={
-  type:'',
-  url:'',
-  option: Object,
-};
+  userObj = new Array();
+  //test 123
+  private httpObj: any = {
+    type: '',
+    url: '',
+    options: Object,
+  };
+constructor(private http: HttpClient, private router: Router) { }
 
-  constructor(private http: HttpClient, private router: Router) { }
-
-  getBaseurl(url: string){
-    switch(url){
+  // production settings
+  getBaseurl(url: string) {
+    switch (url) {
       case 'baseURL': return 'https://priyadarshaniapi.mahamining.com/';
-      break;
+      // case 'baseURL': return 'whizhack_cms/';
+      // case 'baseURL': return 'https://hrmssvr.erpguru.in/'; // for deployment
+        break;
       default:
         return '';
         break;
     }
   }
 
-  getHttp(): any{
-    this.httpObj.option.body && delete this.httpObj.option.body;
-    this.httpObj.option.params && delete this.httpObj.option.params;
+
+  getHttp(): any {
+    !this.httpObj.options.body && delete this.httpObj.options.body;
+    !this.httpObj.options.params && delete this.httpObj.options.params;
     return this.http.request(
       this.httpObj.type,
       this.httpObj.url,
-      this.httpObj.options,
+      this.httpObj.options
     );
   }
+
   setHttp(
     type: string,
     url: string,
     isHeader: Boolean,
     obj: any,
     params: any,
-    baseUrl: any,
-  ){
-    try{
-      // this.userObj = JSON.parse(sessionStorage.loggedDetails);
-    }catch(e) {}
+    baseUrl: any
+  ) {
+    try {
+      //this.userObj = JSON.parse(sessionStorage.loggedInDetails); 
+    } catch (e) {}
     this.clearHttp();
     this.httpObj.type = type;
     this.httpObj.url = this.getBaseurl(baseUrl) + url;
     if (isHeader) {
-      let tempObj: any ={
-          // "Authorization" : "Bearer" + this.userObj.responseData3.accessToken //token set
+      let tempObj: any = {
+        // "Authorization": "Bearer " + this.userObj.responseData3.accessToken // token set
       };
       this.httpObj.options.headers = new HttpHeaders(tempObj);
     }
 
     obj !== false
-    ? (this.httpObj.options.body = obj)
-    :(this.httpObj.options.body = false);
+      ? (this.httpObj.options.body = obj)
+      : (this.httpObj.options.body = false);
     params !== false
-    ? (this.httpObj.options.params = params)
-    : (this.httpObj.options.params = false)
-   }
+      ? (this.httpObj.options.params = params)
+      : (this.httpObj.options.params = false);
+  }
 
-   clearHttp(){
+  clearHttp() {
     this.httpObj.type = '';
     this.httpObj.url = '';
-    this.httpObj.options = '';
-   }
+    this.httpObj.options = {};
+  }
 }
