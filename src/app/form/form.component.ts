@@ -75,7 +75,7 @@ import { CallApiService } from '../core/services/call-api.service';
   ]
 })
 export class FormComponent {
-  displayedColumns: string[] = ['checkbox','SrNo', 'AccountType', 'AccountHolder', 'Bank', 'Account', 'Branch', 'Action'];
+  displayedColumns: string[] = ['id', 'groupName', 'accountHolderName', 'bankName', 'accountNo', 'branchName'];
   dataSource : any;
   isEdit:boolean = false;
   check = new Array();
@@ -84,10 +84,13 @@ export class FormComponent {
   totalPages: any;
   pageNo = 1;
   pageSize = 10;
-  organizationArray = new Array()
+  pageNumber!: number;
+  unitArray = new Array();
+  bankArray = new Array();
+  organizationArray = new Array();
   AccountTypeArr: any[] = [
-    { id: 30, accountName: 'Bank Account' },
-    { id: 25, accountName: 'Cash Account' }
+    { id: 0, accountName: 'Bank Account' },
+    { id: 1, accountName: 'Cash Account' }
   ]
 
 constructor(private fb:FormBuilder,private translate: TranslateService,public callApi:CallApiService){
@@ -95,10 +98,14 @@ constructor(private fb:FormBuilder,private translate: TranslateService,public ca
   translate.use('mr'); 
 }
 
+
 ngOnInit() {
-  // this.getData();
-  // this.controlForm();
   this.getOrg();
+  this.getUnit();
+  this.getBank();
+  this.getData();
+  this.controlForm();
+ 
 
 }
 
@@ -108,7 +115,7 @@ ngOnInit() {
       id: [],
       OrganizationId :['',[Validators.required]],
       UserId :['',[Validators.required]],
-      underGroupId :[30],
+      underGroupId :[0,[Validators.required]],
       BankId :['',[Validators.required]],
       BranchName :['',[Validators.required]],
       ifscCode :['',[Validators.required]],
@@ -118,18 +125,31 @@ ngOnInit() {
   }
 
 
-  // getData(){
-  //   let formData = this.bankForm.value
-  //   this.callApi.setHttp('get','BankAccountRegister/GetAll?BankId='+formData.bankId+'&BranchName='+formData.branchId +'&OrganizationId='+formData.organizationId+'&UnitId='+formData.unitId+'&pageNo='+this.pageNo+'&pageSize='+this.totalPages,false,false,false,'baseURL');
-  //   this.callApi.getHttp().subscribe({
-  //     next: (res:any) =>{
-  //       if(res.statusCode === '200'){
-  //       this.dataSource . res.responseData;
-  //       this.totalPages = res.responseData1?.totalCount
-  //       }
-  //     }
-  //   })
-  // }
+  getData(){
+    // let formData = this.bankForm.value;
+    this.callApi.setHttp('get','BankAccountRegister/GetAll?BankId=293&BranchName=Admin&OrganizationId=279&UnitId=836&pageNo=1&pageSize=10',false,false,false,'baseURL');
+    this.callApi.getHttp().subscribe({
+      next: (res:any) =>{
+        if(res.statusCode == 200){
+        this.dataSource . res.responseData;
+        this.totalPages = res.responseData1?.totalCount
+        }
+      }
+      // next: (res: any) => {
+      //   if (res.statusCode == 200) {
+      //     // this.electionArray = res.data1;
+      //     this.dataSource = res.responseData;
+      //     // console.log(this.electionArray);
+                          
+
+      //   console.log(this.totalPages);
+      //   }
+      //   else {
+      //     this.dataSource = [];
+      //   }
+      // },
+    })
+  }
 
   getOrg(){
     this.callApi.setHttp('get','MasterDropdown/GetAllOrganization?UserId=1',false,false,false,'baseURL');
@@ -141,14 +161,25 @@ ngOnInit() {
       }
     })
   }
-  // getUnit(){
-  //   this.callApi.setHttp('get','MasterDropdown/GetAllOrganization?UserId=1',false,false,false,'baseURL');
-  //   this.callApi.getHttp().subscribe({
-  //     next: (res:any) =>{
-  //       if (res.statusCode == "200"){
-  //         this.organizationArray = res.responseData
-  //       }
-  //     }
-  //   })
-  // }
+  getUnit(){
+    this.callApi.setHttp('get','MasterDropdown/GetAllUnit?OrganizationId=1&UserId=1',false,false,false,'baseURL');
+    this.callApi.getHttp().subscribe({
+      next: (res:any) =>{
+        if (res.statusCode == "200"){
+          this.unitArray = res.responseData
+        }
+      }
+    })
+  }
+
+  getBank(){
+    this.callApi.setHttp('get','MasterDropdown/GetAllBank?OrganizationId=1&UserId=1',false,false,false,'baseURL');
+    this.callApi.getHttp().subscribe({
+      next:(res:any) =>{
+        if(res.statusCode == '200'){
+          this.bankArray = res.responseData
+        }
+      }
+    })
+  }
 }
