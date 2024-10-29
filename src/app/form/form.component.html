@@ -12,32 +12,33 @@
             <div class="row g-2 mb-3">
               <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="mt-2 w-100">
-                <mat-label>Select Orgnization Name</mat-label>
-                <mat-select formControlName="organizationId">
-                  <mat-option  *ngFor="let org of organizationArray" [value]="org.id">{{org.organizationName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              </div>
-              <div class="col-sm-3">
-                <mat-form-field appearance="outline" class="mt-2 w-100">
-                <mat-label>Select Unit Name</mat-label>
-                <mat-select formControlName="unitId">
-                  <mat-option *ngFor="let unit of unitArray" [value]="unit.id">{{unit.unitName}}</mat-option>
-                </mat-select>
+                  <mat-label>Select Orgnization Name</mat-label>
+                  <mat-select formControlName="organizationId">
+                    <mat-option *ngFor="let org of organizationArray"
+                      [value]="org.id">{{org.organizationName}}</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="mt-2 w-100">
-                <mat-label>Select Bank Name</mat-label>
-                <mat-select formControlName="bankId">
-                  <mat-option *ngFor="let bank of bankArray" [value]="bank.id">{{bank.bankName}}</mat-option>
-                </mat-select>
+                  <mat-label>Select Unit Name</mat-label>
+                  <mat-select formControlName="unitId">
+                    <mat-option *ngFor="let unit of unitArray" [value]="unit.id">{{unit.unitName}}</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="mt-2 w-100">
-                <input matInput type="search" formControlName="branchId" placeholder="Search Branch Name">
-             </mat-form-field>
+                  <mat-label>Select Bank Name</mat-label>
+                  <mat-select formControlName="bankId">
+                    <mat-option *ngFor="let bank of bankArray" [value]="bank.id">{{bank.bankName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field appearance="outline" class="mt-2 w-100">
+                  <input matInput type="search" formControlName="branchId" placeholder="Search Branch Name">
+                </mat-form-field>
               </div>
             </div>
           </form>
