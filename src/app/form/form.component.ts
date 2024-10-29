@@ -75,8 +75,8 @@ import { CallApiService } from '../core/services/call-api.service';
   ]
 })
 export class FormComponent {
-  displayedColumns: string[] = ['id', 'groupName', 'accountHolderName', 'bankName', 'accountNo', 'branchName'];
-  dataSource : any;
+  displayedColumns: string[] = ['srNo', 'groupName', 'accountHolderName', 'bankName', 'accountNo', 'branchName'];
+  dataSource = new Array();
   isEdit:boolean = false;
   check = new Array();
   filterForm!:FormGroup;
@@ -87,6 +87,7 @@ export class FormComponent {
   pageNumber!: number;
   unitArray = new Array();
   bankArray = new Array();
+  value:any;
   organizationArray = new Array();
   AccountTypeArr: any[] = [
     { id: 0, accountName: 'Bank Account' },
@@ -99,7 +100,9 @@ constructor(private fb:FormBuilder,private translate: TranslateService,public ca
 }
 
 
+
 ngOnInit() {
+this.defaulltForm;
   this.getOrg();
   this.getUnit();
   this.getBank();
@@ -124,32 +127,63 @@ ngOnInit() {
     })
   }
 
+  defaulltForm(){
+  this.filterForm = this.fb.group({
+    organizationId :['',[Validators.required]],
+    unitId :['',[Validators.required]],
+    bankId :['',[Validators.required]],
+    branchId :['',[Validators.required]],
 
-  getData(){
-    // let formData = this.bankForm.value;
-    this.callApi.setHttp('get','BankAccountRegister/GetAll?BankId=293&BranchName=Admin&OrganizationId=279&UnitId=836&pageNo=1&pageSize=10',false,false,false,'baseURL');
+  })
+  }
+
+
+  getData() {
+    let formData = this.filterForm.value;
+    let obj = `${formData.bankId}&BranchName=${formData.branchId}&OrganizationId=${formData.organizationId}&UnitId=${formData.unitId}&pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
+    this.callApi.setHttp('GET','BankAccountRegister/GetAll?' + obj , false, false, false, 'baseURL');
     this.callApi.getHttp().subscribe({
-      next: (res:any) =>{
-        if(res.statusCode == 200){
-        this.dataSource . res.responseData;
-        this.totalPages = res.responseData1?.totalCount
+        next: (res: any) => {
+            if (res.statusCode === "200") {
+                this.dataSource = res.responseData;
+                this.totalPages = res.responseData1?.totalCount;
+            } else {
+                console.error('Error fetching data:', res.message);
+            }
+        },
+        error: (err:any) => {
+            console.error('API call failed:', err);
         }
-      }
-      // next: (res: any) => {
-      //   if (res.statusCode == 200) {
-      //     // this.electionArray = res.data1;
-      //     this.dataSource = res.responseData;
-      //     // console.log(this.electionArray);
+    });
+}
+
+    // let formData = this.bankForm.value;
+  //   this.callApi.setHttp("get","BankMaster/GetAll",false,false,false,"baseURL");
+  //   this.callApi.getHttp().subscribe({
+  //     next: (res:any) =>{
+  //       if(res.statusCode == "200"){
+  //       this.dataSource = res.responseData;
+  //       this.totalPages = res.responseData1?.totalCount
+  //       }
+  //     }
+  //   })
+  // }
+
+  //     next: (res: any) => {
+  //       if (res.statusCode == 200) {
+  //         // this.electionArray = res.data1;
+  //         this.dataSource = res.responseData;
+  //         // console.log(this.electionArray);
                           
 
-      //   console.log(this.totalPages);
-      //   }
-      //   else {
-      //     this.dataSource = [];
-      //   }
-      // },
-    })
-  }
+  //       console.log(this.totalPages);
+  //       }
+  //       else {
+  //         this.dataSource = [];
+  //       }
+  //     },
+  //   })
+  // }
 
   getOrg(){
     this.callApi.setHttp('get','MasterDropdown/GetAllOrganization?UserId=1',false,false,false,'baseURL');
@@ -182,4 +216,5 @@ ngOnInit() {
       }
     })
   }
+  
 }
