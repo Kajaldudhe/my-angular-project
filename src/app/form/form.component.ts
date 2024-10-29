@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {Component} from '@angular/core';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -8,8 +8,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -33,10 +33,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTreeModule} from '@angular/material/tree';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CallApiService } from '../core/services/call-api.service';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {CallApiService} from '../core/services/call-api.service';
 
 @Component({
   standalone: true,
@@ -78,7 +78,13 @@ constructor(private fb:FormBuilder,private translate: TranslateService,public ca
 
 
 ngOnInit() {
-this.defaulltForm;
+  this.filterForm = this.fb.group({
+    organizationId :[''],
+    unitId :[''],
+    bankId :[''],
+    branchId :[''],
+
+  })
   this.getOrg();
   this.getUnit();
   this.getBank();
@@ -103,24 +109,18 @@ this.defaulltForm;
     })
   }
 
-  defaulltForm(){
-  this.filterForm = this.fb.group({
-    organizationId :['',[Validators.required]],
-    unitId :['',[Validators.required]],
-    bankId :['',[Validators.required]],
-    branchId :['',[Validators.required]],
-
-  })
-  }
+  // defaulltForm(){
+  
+  // }
 
 
   getData() {
     let formData = this.filterForm.value;
-    let obj = `${formData.bankId}&BranchName=${formData.branchId}&OrganizationId=${formData.organizationId}&UnitId=${formData.unitId}&pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
+    let obj = `BankId=${formData.bankId}&BranchName=${formData.branchId}&OrganizationId=${formData.organizationId}&UnitId=${formData.unitId}&pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
     this.callApi.setHttp('GET','BankAccountRegister/GetAll?' + obj , false, false, false, 'baseURL');
     this.callApi.getHttp().subscribe({
         next: (res: any) => {
-            if (res.statusCode === "200") {
+            if (res?.statusCode == "200") {
                 this.dataSource = res.responseData;
                 this.totalPages = res.responseData1?.totalCount;
             } else {

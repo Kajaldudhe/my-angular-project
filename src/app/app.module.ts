@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
+import { BankNameComponent } from "./bank-name/bank-name.component";
+import { AddBankComponent } from './bank-name/add-bank/add-bank.component';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -16,6 +18,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    AddBankComponent,
     
   ],
   imports: [
@@ -30,12 +33,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    BankNameComponent
 ],
   providers: [],
   bootstrap: [AppComponent]
