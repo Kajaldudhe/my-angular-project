@@ -119,7 +119,7 @@
         </div>
         <!-- <div class=""> -->
         <div class="col-sm-4">
-          <form [formGroup]="bankForm">
+          <form [formGroup]="bankForm"  (ngSubmit)="onSubmit()">
             <div class="card">
               <mat-card-header class="heading">
                 <mat-card-title class="mb-2">
@@ -197,7 +197,7 @@
               </div>
               <div class="d-flex mb-3 mt-2 gap-2 justify-content-end me-3">
                 <button mat-raised-button>Clear</button>
-                <button mat-raised-button color="primary">{{isEdit ? 'Update' : 'Submit'}}</button>
+                <button mat-raised-button color="primary" type="submiyt">{{isEdit ? 'Update' : 'Submit'}}</button>
               </div>
             </div>
           </form>

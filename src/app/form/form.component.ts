@@ -78,20 +78,17 @@ constructor(private fb:FormBuilder,private translate: TranslateService,public ca
 
 
 ngOnInit() {
-  this.filterForm = this.fb.group({
-    organizationId :[''],
-    unitId :[''],
-    bankId :[''],
-    branchId :[''],
-
-  })
+  this.defaulltForm();
   this.getOrg();
   this.getUnit();
   this.getBank();
   this.getData();
   this.controlForm();
- 
+}
 
+
+get f (){
+  return this.bankForm.controls;
 }
 
 
@@ -109,9 +106,15 @@ ngOnInit() {
     })
   }
 
-  // defaulltForm(){
+  defaulltForm(){
+    this.filterForm = this.fb.group({
+      organizationId :[''],
+      unitId :[''],
+      bankId :[''],
+      branchId :[''],
   
-  // }
+    })
+  }
 
 
   getData() {
@@ -193,4 +196,18 @@ ngOnInit() {
     })
   }
   
+  onSubmit(){
+    this.callApi.setHttp('options','BankAccountRegister/AddBankAccount',false,false,false,'baseURL');
+    this.callApi.getHttp().subscribe({
+      next:(res:any)=>{
+        if(res.statusCode == '200' && res.responseData){
+        }
+      }
+    })
+  }
+
+  // clearForm(){
+  //   return.this.bankForm
+  // }
+ 
 }
