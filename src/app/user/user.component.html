@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>User Management</h1>
+
+  <!-- Template-Driven Form -->
+  <form (ngSubmit)="onSubmit()" #userFormDirective="ngForm">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="userForm.name" name="name" required #name="ngModel">
+      <div *ngIf="name.invalid && name.touched" class="error">Name is required</div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="userForm.email" name="email" required #email="ngModel">
+      <div *ngIf="email.invalid && email.touched" class="error">Valid email is required</div>
+    </div>
+
+    <button type="submit" [disabled]="userFormDirective.invalid">
+      {{ editMode ? 'Update' : 'Add' }} User
+    </button>
+    <button type="button" (click)="resetForm()">Reset</button>
+  </form>
+
+  <!-- Display User List -->
+  <h2>User List</h2>
+  <ul>
+    <li *ngFor="let user of users; let i = index">
+      {{ user.name }} ({{ user.email }})
+      <button (click)="onEdit(i)">Edit</button>
+      <button (click)="onDelete(i)">Delete</button>
+    </li>
+  </ul>
+</div>
+
+<!-- Styles -->
